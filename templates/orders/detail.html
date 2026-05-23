@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}Order {{ order.order_id }} — Zain Market{% endblock %}
+{% block content %}
+<div class="row g-4">
+  <div class="col-md-8">
+    <div class="card p-4">
+      <div class="d-flex justify-content-between mb-3">
+        <h5 class="fw-bold">Order {{ order.order_id }}</h5>
+        <span class="badge fs-6
+          {% if order.status == 'delivered' %}bg-success
+          {% elif order.status == 'cancelled' %}bg-danger
+          {% elif order.status == 'pending' %}bg-warning text-dark
+          {% else %}bg-info{% endif %}">
+          {{ order.get_status_display }}
+        </span>
+      </div>
+      <table class="table">
+        <thead><tr><th>Product</th><th>Qty</th><th>Price</th><th>Subtotal</th></tr></thead>
+        <tbody>
+          {% for item in order.items.all %}
+          <tr>
+            <td>{{ item.product_name }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>Rs. {{ item.unit_price }}</td>
+            <td>Rs. {{ item.subtotal }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr class="fw-bold"><td colspan="3">Total</td><td class="text-danger">Rs. {{ order.total_amount }}</td></tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card p-4">
+      <h6 class="fw-bold mb-3">Delivery Info</h6>
+      <p class="mb-1"><i class="bi bi-person me-2"></i>{{ order.delivery_name }}</p>
+      <p class="mb-1"><i class="bi bi-telephone me-2"></i>{{ order.delivery_phone }}</p>
+      <p class="mb-1"><i class="bi bi-geo-alt me-2"></i>{{ order.delivery_address }}</p>
+      <p class="mb-0"><i class="bi bi-building me-2"></i>{{ order.delivery_city }}</p>
+      <hr>
+      <small class="text-muted">Order date: {{ order.created_at|date:"d M Y, H:i" }}</small>
+    </div>
+  </div>
+</div>
+{% endblock %}

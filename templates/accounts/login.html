@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Login — Zain Market{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-4">
+    <div class="card p-4">
+      <h4 class="fw-bold text-center mb-4">Login Karo</h4>
+      <form method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button class="btn btn-primary w-100 mt-3">Login</button>
+      </form>
+      <p class="text-center mt-3 small">
+        Account nahi hai? <a href="{% url 'register' %}">Register Karo</a>
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}{{ product.name }} — Zain Market{% endblock %}
+{% block content %}
+<div class="row g-4">
+  <div class="col-md-5">
+    <img src="{{ product.get_image }}" class="img-fluid rounded-3 shadow-sm w-100" style="max-height:400px;object-fit:cover">
+  </div>
+  <div class="col-md-7">
+    <span class="badge bg-secondary mb-2">{{ product.category.name|default:"Uncategorized" }}</span>
+    <h2 class="fw-bold">{{ product.name }}</h2>
+    <p class="text-muted">{{ product.description }}</p>
+    <h3 class="text-danger fw-bold">Rs. {{ product.price }}</h3>
+    <p class="text-muted small">
+      Stock: <strong>{{ product.stock }}</strong>
+      {% if product.is_low_stock %}<span class="badge bg-warning text-dark ms-1">Low Stock</span>{% endif %}
+    </p>
+
+    {% if user.is_authenticated and product.stock > 0 %}
+    <form method="post" action="{% url 'add_to_cart' product.pk %}" class="d-flex gap-3 align-items-center mt-3">
+      {% csrf_token %}
+      <input type="number" name="quantity" value="1" min="1" max="{{ product.stock }}" class="form-control" style="width:90px">
+      <button class="btn btn-primary px-4"><i class="bi bi-cart-plus me-1"></i>Cart Mein Add Karo</button>
+    </form>
+    {% elif product.stock == 0 %}
+    <div class="alert alert-warning mt-3">Yeh product abhi available nahi hai.</div>
+    {% else %}
+    <a href="{% url 'login' %}" class="btn btn-primary mt-3">Login karo cart use karne ke liye</a>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

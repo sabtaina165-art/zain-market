@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}All Orders — Zain Market{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h4 class="fw-bold">All Orders</h4>
+  <form method="get" class="d-flex gap-2">
+    <input type="text" name="q" value="{{ query }}" class="form-control" placeholder="Order ID search...">
+    <button class="btn btn-primary">Search</button>
+  </form>
+</div>
+<div class="card">
+  <div class="table-responsive">
+    <table class="table table-hover mb-0">
+      <thead class="table-light">
+        <tr><th>Order ID</th><th>Customer</th><th>Date</th><th>Total</th><th>Status</th><th>Action</th></tr>
+      </thead>
+      <tbody>
+        {% for order in orders %}
+        <tr>
+          <td class="fw-semibold">{{ order.order_id }}</td>
+          <td>{{ order.user.username }}<br><small class="text-muted">{{ order.user.email }}</small></td>
+          <td>{{ order.created_at|date:"d M Y" }}</td>
+          <td>Rs. {{ order.total_amount }}</td>
+          <td><span class="badge
+            {% if order.status == 'delivered' %}bg-success
+            {% elif order.status == 'cancelled' %}bg-danger
+            {% elif order.status == 'pending' %}bg-warning text-dark
+            {% else %}bg-info{% endif %}">{{ order.get_status_display }}</span>
+          </td>
+          <td><a href="{% url 'admin_order_detail' order.pk %}" class="btn btn-sm btn-outline-primary">Detail</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-5">
+    <div class="card p-4 text-center">
+      <h5 class="fw-bold mb-3">Confirm Delete</h5>
+      <p>"<strong>{{ product.name }}</strong>" ko remove karna chahte ho?</p>
+      <form method="post" class="d-flex gap-3 justify-content-center mt-3">
+        {% csrf_token %}
+        <button class="btn btn-danger">Haan, Remove Karo</button>
+        <a href="{% url 'admin_products' %}" class="btn btn-outline-secondary">Cancel</a>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

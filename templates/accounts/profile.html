@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Profile — Zain Market{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-5">
+    <div class="card p-4">
+      <h4 class="fw-bold mb-4">Mera Profile</h4>
+      <p><strong>Naam:</strong> {{ user.username }}</p>
+      <p><strong>Email:</strong> {{ user.email }}</p>
+      <p><strong>Phone:</strong> {{ user.phone|default:"—" }}</p>
+      <p><strong>Role:</strong> {{ user.get_role_display }}</p>
+      <a href="{% url 'order_list' %}" class="btn btn-primary mt-2">Meri Orders Dekho</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
