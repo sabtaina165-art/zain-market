@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Zain Market — Django + MySQL
 
 Full e-commerce app: product catalog, cart, orders, admin dashboard.
@@ -88,3 +89,6 @@ Site: http://127.0.0.1:8000
 ## Demo Accounts (after createsuperuser)
 - **Admin:** createsuperuser se banao, role = admin set karo
 - **Customer:** /accounts/register/ se banao
+=======
+# zain-market
+>>>>>>> 42871e8ad4df2dc1906d328ffe76789476ac81e9
